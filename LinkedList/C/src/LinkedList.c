@@ -3,71 +3,54 @@
 #include <stdlib.h>
 #include <string.h>
 
-node *create(void *item, int size)
+linkedList *create(void *item, int size, void(*printItem)(void *), int(*compare)(void *, void *))
 {
-	node *newNode = (node *)calloc(1, sizeof(node));
 	void *newItem = (void *)calloc(1, size);
-
 	memcpy(newItem, item, size);
 
+	node *newNode = (node *)calloc(1, sizeof(node));
 	newNode->next = NULL;
 	newNode->item = newItem;
 
-	return newNode;
+	linkedList *list = (linkedList *)calloc(1, sizeof(linkedList));
+	list->head = newNode;
+	list->tail = newNode;
+	list->size = 1;
+	list->printItem = printItem;
+	list->compare = compare;
+
+	return list;
 }
 
-int size(node *head)
+void add(linkedList *list, void *item, int size)
 {
-	int count = head == NULL ? 0:1;
-
-	if(head != NULL)
+	if(list != NULL)
 	{
-		node *curr = head;
-		while(curr->next != NULL)
-		{
-			count= count + 1;
-			curr = (node *)curr->next;
-		}
-	}
-
-	return count;
-}
-
-void add(node *head, void *item, int size)
-{
-	if(head != NULL)
-	{
-		node *curr = head;
-		while(curr->next != NULL)
-		{
-			curr = (node *)curr->next;
-		}
-
-		node *newNode = (node *)calloc(1, sizeof(node));
 		void *newItem = (void *)calloc(1, size);
-
 		memcpy(newItem, item, size);
 
+		node *newNode = (node *)calloc(1, sizeof(node));
 		newNode->next = NULL;
 		newNode->item = newItem;
 
-		curr->next = newNode;
+		list->tail->next = newNode;
+		list->tail = newNode;
+
+		list->size = list->size + 1;
 	}
 }
 
-void printList(node *head, void(*itemPrint)(void *))
+void printList(linkedList *list)
 {
-	printf("\nList");
-
-	if(head != NULL)
+	if(list != NULL)
 	{
-		node *curr = head;
+		node *curr = list->head;
 		do
 		{
-			itemPrint(curr->item);
-			curr = (node *)curr->next;
+			list->printItem(curr->item);
+			curr = curr->next;
 		}while(curr->next != NULL);
 
-		printf("\n%s", (char *)curr->item);
+		list->printItem(curr->item);
 	}
 }
