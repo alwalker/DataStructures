@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "../src/LinkedList.h"
 
+void MyPrint(void *);
+
 int main()
 {
 	node *empty = NULL;
@@ -14,11 +16,16 @@ int main()
 
 
 	printf("\nPrinting list (should be blarg, test):");
-	printList(head);
+	printList(head, MyPrint);
 
 
 
 	printf("\n");
 
 	return 0;
+}
+
+void MyPrint(void *item)
+{
+	printf("\n%s", (char *)item);
 }

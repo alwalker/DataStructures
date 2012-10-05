@@ -54,7 +54,7 @@ void add(node *head, void *item, int size)
 	}
 }
 
-void printList(node *head)
+void printList(node *head, void(*itemPrint)(void *))
 {
 	printf("\nList");
 
@@ -63,7 +63,7 @@ void printList(node *head)
 		node *curr = head;
 		do
 		{
-			printf("\n%s", (char *)curr->item);
+			itemPrint(curr->item);
 			curr = (node *)curr->next;
 		}while(curr->next != NULL);
 
