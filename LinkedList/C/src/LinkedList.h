@@ -4,7 +4,7 @@ typedef struct
 	struct node *next;
 }node;
 
-node *create(void *);
+node *create(void *, int);
 int size(node *);
-void add(node *, void *);
+void add(node *, void *, int);
 void printList(node *);

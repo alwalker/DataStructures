@@ -2,11 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-node *create(void *item)
+node *create(void *item, int size)
 {
 	node *newNode = (node *)calloc(1, sizeof(node));
+	void *newItem = (void *)calloc(1, size);
+
+	memcpy(newItem, item, size);
+
 	newNode->next = NULL;
-	newNode->item = item;
+	newNode->item = newItem;
 
 	return newNode;
 }
@@ -28,7 +32,7 @@ int size(node *head)
 	return count;
 }
 
-void add(node *head, void *item)
+void add(node *head, void *item, int size)
 {
 	if(head != NULL)
 	{
@@ -39,8 +43,12 @@ void add(node *head, void *item)
 		}
 
 		node *newNode = (node *)calloc(1, sizeof(node));
+		void *newItem = (void *)calloc(1, size);
+
+		memcpy(newItem, item, size);
+
 		newNode->next = NULL;
-		newNode->item = item;
+		newNode->item = newItem;
 
 		curr->next = newNode;
 	}

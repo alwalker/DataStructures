@@ -1,2 +1,2 @@
 all:
-	gcc tests.c ../src/LinkedList.c -o tests
+	gcc tests.c ../src/LinkedList.c -o test
