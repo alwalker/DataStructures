@@ -1,6 +1,7 @@
 #include "LinkedList.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 node *create(void *item, int size)
 {
