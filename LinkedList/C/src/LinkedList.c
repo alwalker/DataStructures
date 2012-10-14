@@ -38,6 +38,47 @@ void add(linkedList *list, void *item, int size)
 	}
 }
 
+void removeItem(linkedList *list, void *item)
+{
+	if(list != NULL)
+	{
+		node *prev = NULL, *next = NULL;
+		node *curr = list->head;
+
+		do
+		{
+			next = curr->next;
+
+			if(list->compare(curr->item, item) == 0)
+			{
+				free(curr->item);
+				free(curr);
+
+				if(prev == NULL)
+				{
+					if(next != NULL)
+					{
+						list->head = next;
+					}
+					else
+					{
+						list->head = NULL;
+					}
+				}
+				else
+				{
+					prev->next = next;
+				}
+
+				list->size = list->size - 1;
+			}
+
+			prev = curr;
+			curr = next;
+		}while(next != NULL);
+	}
+}
+
 void printList(linkedList *list)
 {
 	if(list != NULL)
