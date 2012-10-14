@@ -14,7 +14,6 @@ linkedList *create(void *item, int size, void(*printItem)(void *), int(*compare)
 
 	linkedList *list = (linkedList *)calloc(1, sizeof(linkedList));
 	list->head = newNode;
-	list->tail = newNode;
 	list->size = 1;
 	list->printItem = printItem;
 	list->compare = compare;
@@ -30,11 +29,10 @@ void add(linkedList *list, void *item, int size)
 		memcpy(newItem, item, size);
 
 		node *newNode = (node *)calloc(1, sizeof(node));
-		newNode->next = NULL;
+		newNode->next = list->head;
 		newNode->item = newItem;
 
-		list->tail->next = newNode;
-		list->tail = newNode;
+		list->head = newNode;
 
 		list->size = list->size + 1;
 	}

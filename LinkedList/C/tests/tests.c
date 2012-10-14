@@ -71,12 +71,6 @@ bool CreateTests(char *result)
 		return false;		
 	}
 
-	if(list->tail != list->head)
-	{
-		strcpy(result, "New list has invalid tail\0");
-		return false;
-	}
-
 	if(list->printItem == NULL)
 	{
 		strcpy(result, "New list does not have printItem function\0");
@@ -107,9 +101,10 @@ bool AddTests(char *result)
 		return false;
 	}
 
-	if(strcmp(list->head->next->item, "Item 2\0") != 0)
+	if(strcmp(list->head->next->item, "Item 4\0") != 0)
 	{
-		strcpy(result, "Incorrect item in #2 position!\0");
+		sprintf(result, "Incorrect item in #2 position: %s!\0",
+		 (char *)list->head->next->item);
 		return false;
 	}
 
@@ -119,21 +114,15 @@ bool AddTests(char *result)
 		return false;
 	}
 
-	if(strcmp(list->head->next->next->next->item, "Item 4\0") != 0)
+	if(strcmp(list->head->next->next->next->item, "Item 2\0") != 0)
 	{
 		strcpy(result, "Incorrect item in #4 position!\0");
 		return false;
 	}
 
-	if(strcmp(list->head->next->next->next->next->item, "Item 5\0") != 0)
+	if(strcmp(list->head->next->next->next->next->item, "Item 1\0") != 0)
 	{
 		strcpy(result, "Incorrect item in #5 position!\0");
-		return false;
-	}
-
-	if(strcmp(list->tail->item, "Item 5\0") != 0)
-	{
-		strcpy(result, "Incorrect item in tail position!\0");
 		return false;
 	}
 
@@ -153,7 +142,7 @@ bool PrintTest(char *result)
 
 	printList(list);
 
-	if(strcmp(testPrintout, "Item 1Item 2Item 3Item 4Item 5") != 0)
+	if(strcmp(testPrintout, "Item 5Item 4Item 3Item 2Item 1") != 0)
 	{
 		sprintf(result,
 		 "Incorrect items passed to print:\n\t%s\nShould have been:\n\tItem 1Item 2Item 3Item 4Item 5",

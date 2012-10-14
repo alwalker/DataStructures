@@ -7,7 +7,6 @@ typedef struct node
 typedef struct linkedList
 {
 	struct node *head;
-	struct node *tail;
 	int size;
 	void(*printItem)(void *);
 	int(*compare)(void *, void *);
