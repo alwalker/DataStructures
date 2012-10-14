@@ -79,6 +79,26 @@ void removeItem(linkedList *list, void *item)
 	}
 }
 
+void *get(linkedList *list, int index)
+{
+	if(list != NULL)
+	{
+		if(index + 1 <= list->size)
+		{
+			int count = 0;
+			node *curr = list->head;
+
+			while(count < index)
+			{
+				curr = curr->next;
+				count++;
+			}
+
+			return curr->item;
+		}
+	}
+}
+
 void printList(linkedList *list)
 {
 	if(list != NULL)

@@ -10,6 +10,7 @@ bool CreateTests(char *);
 bool AddTests(char *);
 bool RemoveTests(char *);
 bool PrintTest(char *);
+bool GetTests(char *);
 void TestPrintItem(void *);
 
 int main()
@@ -38,6 +39,18 @@ int main()
 	else
 	{
 		printf("\nAdd Tests Failed: %s\n", result);
+		return 1;
+	}
+	fflush(NULL);
+
+	passed = GetTests(result);
+	if(passed)
+	{
+		printf("\nGet Tests Passed!");
+	}
+	else
+	{
+		printf("\nGet Tests Failed: %s\n", result);
 		return 1;
 	}
 	fflush(NULL);
@@ -140,6 +153,39 @@ bool AddTests(char *result)
 	if(strcmp(list->head->next->next->next->next->item, "Item 1\0") != 0)
 	{
 		strcpy(result, "Incorrect item in #5 position!\0");
+		return false;
+	}
+
+	return true;
+}
+
+bool GetTests(char *result)
+{
+	char *head, *tail, *middle;
+	linkedList *list = create((void *)"Item 1\0", sizeof("Item 1\0"), MyPrint, MyCompare);
+
+	add(list, (void *)"Item 2\0", sizeof("Item 2\0"));
+	add(list, (void *)"Item 3\0", sizeof("Item 3\0"));
+	add(list, (void *)"Item 4\0", sizeof("Item 4\0"));
+	add(list, (void *)"Item 5\0", sizeof("Item 5\0"));
+
+	head = (char *)get(list, 0);
+	middle = (char *)get(list, 2);
+	tail = (char *)get(list, 4);
+
+	if(strcmp(head, "Item 5\0") != 0)
+	{			
+		sprintf(result, "Incorrect head returned: %s", head);
+		return false;
+	}
+	if(strcmp(middle, "Item 3\0") != 0)
+	{
+		sprintf(result, "Incorrect middle returned: %s", middle);
+		return false;
+	}
+	if(strcmp(tail, "Item 1\0") != 0)
+	{
+		sprintf(result, "Incorrect tail return: %s", tail);
 		return false;
 	}
 

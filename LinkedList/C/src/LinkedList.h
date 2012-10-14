@@ -16,3 +16,4 @@ linkedList *create(void *, int, void(*)(void *), int(*)(void *, void *));
 void add(linkedList *, void *, int);
 void printList(linkedList *);
 void removeItem(linkedList *, void *);
+void *get(linkedList *, int);
