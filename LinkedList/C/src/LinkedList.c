@@ -99,6 +99,35 @@ void *get(linkedList *list, int index)
 	}
 }
 
+int indexOf(linkedList *list, void *item)
+{
+	if(list != NULL)
+	{
+		int count = 0;
+		node *curr = list->head;
+
+		while(count < list->size)
+		{
+			if(list->compare(curr->item, item) == 0)
+			{
+				break;
+			}
+
+			curr = curr->next;
+			count++;
+		}
+
+		if(count == list->size)
+		{
+			return -1;
+		}
+		else
+		{
+			return count;
+		}
+	}	
+}
+
 void printList(linkedList *list)
 {
 	if(list != NULL)

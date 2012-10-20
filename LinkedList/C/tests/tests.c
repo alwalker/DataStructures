@@ -11,6 +11,7 @@ bool AddTests(char *);
 bool RemoveTests(char *);
 bool PrintTest(char *);
 bool GetTests(char *);
+bool IndexOfTests(char *);
 void TestPrintItem(void *);
 
 int main()
@@ -51,6 +52,18 @@ int main()
 	else
 	{
 		printf("\nGet Tests Failed: %s\n", result);
+		return 1;
+	}
+	fflush(NULL);
+
+	passed = IndexOfTests(result);
+	if(passed)
+	{
+		printf("\nIndexOf Tests Passed!");
+	}
+	else
+	{
+		printf("\nIndexOf Tests Failed: %s\n", result);
 		return 1;
 	}
 	fflush(NULL);
@@ -134,7 +147,7 @@ bool AddTests(char *result)
 	if(strcmp(list->head->next->item, "Item 4\0") != 0)
 	{
 		sprintf(result, "Incorrect item in #2 position: %s!\0",
-		 (char *)list->head->next->item);
+			(char *)list->head->next->item);
 		return false;
 	}
 
@@ -192,6 +205,33 @@ bool GetTests(char *result)
 	return true;
 }
 
+bool IndexOfTests(char *result)
+{
+	linkedList *list = create((void *)"Item 1\0", sizeof("Item 1\0"), MyPrint, MyCompare);
+
+	add(list, (void *)"Item 2\0", sizeof("Item 2\0"));
+	add(list, (void *)"Item 3\0", sizeof("Item 3\0"));
+	add(list, (void *)"Item 4\0", sizeof("Item 4\0"));
+	add(list, (void *)"Item 5\0", sizeof("Item 5\0"));
+
+	int index = indexOf(list, (void *)"Item 1\0");
+	int badIndex = indexOf(list, (void *)"BANANAS\0");
+
+	if(index != 4)
+	{			
+		sprintf(result, "Incorrect index returned: %d", index);
+		return false;
+	}
+
+	if(badIndex != -1)
+	{			
+		sprintf(result, "Found non existing item!", badIndex);
+		return false;
+	}
+
+	return true;
+}
+
 bool RemoveTests(char *result)
 {
 	linkedList *list = create((void *)"Item 1\0", sizeof("Item 1\0"), MyPrint, MyCompare);
@@ -221,13 +261,13 @@ bool RemoveTests(char *result)
 	if(strcmp(list->head->item, "Item 4\0") != 0)
 	{
 		sprintf(result, "Incorrect item in #1 position(head remove): %s!\0",
-		 (char *)list->head->next->item);
+			(char *)list->head->next->item);
 		return false;
 	}
 	if(strcmp(list->head->next->item, "Item 3\0") != 0)
 	{
 		sprintf(result, "Incorrect item in #2 position(head remove): %s!\0",
-		 (char *)list->head->next->item);
+			(char *)list->head->next->item);
 		return false;
 	}
 	if(strcmp(list->head->next->next->item, "Item 2\0") != 0)
@@ -263,20 +303,20 @@ bool RemoveTests(char *result)
 	{
 		sprintf(
 			result,
-		 	"List has incorrect size of %d (should be 4)!(middle list)\0",
-		  	middleList->size);
+			"List has incorrect size of %d (should be 4)!(middle list)\0",
+			middleList->size);
 		return false;
 	}
 	if(strcmp(middleList->head->item, "Item 5\0") != 0)
 	{
 		sprintf(result, "Incorrect item in #1 position(middle list): %s!\0",
-		 (char *)middleList->head->next->item);
+			(char *)middleList->head->next->item);
 		return false;
 	}
 	if(strcmp(middleList->head->next->item, "Item 4\0") != 0)
 	{
 		sprintf(result, "Incorrect item in #2 position(middle list): %s!\0",
-		 (char *)middleList->head->next->item);
+			(char *)middleList->head->next->item);
 		return false;
 	}
 	if(strcmp(middleList->head->next->next->item, "Item 2\0") != 0)
@@ -305,13 +345,13 @@ bool RemoveTests(char *result)
 	if(strcmp(tailList->head->item, "Item 5\0") != 0)
 	{
 		sprintf(result, "Incorrect item in #1 position(tail remove): %s!\0",
-		 (char *)tailList->head->next->item);
+			(char *)tailList->head->next->item);
 		return false;
 	}
 	if(strcmp(tailList->head->next->item, "Item 4\0") != 0)
 	{
 		sprintf(result, "Incorrect item in #2 position(tail remove): %s!\0",
-		 (char *)tailList->head->next->item);
+			(char *)tailList->head->next->item);
 		return false;
 	}
 	if(strcmp(tailList->head->next->next->item, "Item 3\0") != 0)
@@ -344,8 +384,8 @@ bool PrintTest(char *result)
 	if(strcmp(testPrintout, "Item 5Item 4Item 3Item 2Item 1") != 0)
 	{
 		sprintf(result,
-		 "Incorrect items passed to print:\n\t%s\nShould have been:\n\tItem 1Item 2Item 3Item 4Item 5",
-		  testPrintout);
+			"Incorrect items passed to print:\n\t%s\nShould have been:\n\tItem 1Item 2Item 3Item 4Item 5",
+			testPrintout);
 		return false;
 	}
 
