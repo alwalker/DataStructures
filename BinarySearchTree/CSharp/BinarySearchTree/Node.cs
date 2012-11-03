@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BinarySearchTree
 {
-    public class Node<T>
+    public class Node<T> : IEquatable<Node<T>>
     {
         private readonly T _item;
 
@@ -17,6 +17,19 @@ namespace BinarySearchTree
         public Node(T item)
         {
             _item = item;
+        }
+
+        public bool Equals(Node<T> other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return
+                object.ReferenceEquals(Right, other.Right) &&
+                object.ReferenceEquals(Left, other.Left) &&
+                _item.Equals(other.Item);
         }
     }
 }

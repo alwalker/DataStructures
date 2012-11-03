@@ -73,5 +73,89 @@ namespace BinarySearchTree
             Assert.AreEqual(24, t.Root.Right.Left.Item);
             Assert.AreEqual(33, t.Root.Right.Right.Item);
         }
+
+        [Test]
+        public void FindInLeafNode()
+        {
+            var t = new Tree<int>();
+
+            t.Add(23);
+            t.Add(20);
+            t.Add(25);
+            t.Add(24);
+            t.Add(33);
+            t.Add(10);
+            t.Add(7);
+            t.Add(8);
+
+            var actual = t.Find(8);
+
+            Assert.AreEqual(t.Root.Left.Left.Left.Right, actual);
+        }
+
+        [Test]
+        public void FindInMiddle()
+        {
+            var t = new Tree<int>();
+
+            t.Add(23);
+            t.Add(20);
+            t.Add(25);
+            t.Add(24);
+            t.Add(33);
+            t.Add(10);
+            t.Add(7);
+            t.Add(8);
+
+            var actual = t.Find(10);
+
+            Assert.AreEqual(t.Root.Left.Left, actual);
+        }
+
+        [Test]
+        public void FindNonExistingKeyReturnsNull()
+        {
+            var t = new Tree<int>();
+
+            t.Add(23);
+            t.Add(20);
+            t.Add(25);
+            t.Add(24);
+            t.Add(33);
+            t.Add(10);
+            t.Add(7);
+            t.Add(8);
+
+            var actual = t.Find(101);
+
+            Assert.IsNull(actual);
+        }
+
+        [Test]
+        public void NodeEquality()
+        {
+            var left = new Node<int>(27);
+            var right = new Node<int>(28);
+
+            var n = new Node<int>(1);
+            n.Left = left;
+            n.Right = right;
+
+            var equal = new Node<int>(1);
+            equal.Left = left;
+            equal.Right = right;
+
+            var notEqualItem = new Node<int>(33);
+            notEqualItem.Left = left;
+            notEqualItem.Right = right;
+
+            var notEqualNodes = new Node<int>(1);
+            notEqualNodes.Left = right;
+            notEqualNodes.Right = left;
+
+            Assert.IsTrue(n.Equals(equal));
+            Assert.IsFalse(n.Equals(notEqualItem));
+            Assert.IsFalse(n.Equals(notEqualNodes));
+        }
     }
 }

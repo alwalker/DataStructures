@@ -50,5 +50,30 @@ namespace BinarySearchTree
                 }
             }
         }
+
+        public Node<T> Find(T item)
+        {
+            Node<T> result = null;
+            var currentNode = _root;
+
+            while (currentNode != null)
+            {
+                if (currentNode.Item.CompareTo(item) > 0)
+                {
+                    currentNode = currentNode.Left;
+                }
+                else if (currentNode.Item.CompareTo(item) < 0)
+                {
+                    currentNode = currentNode.Right;
+                }
+                else
+                {
+                    result = currentNode;
+                    break;
+                }
+            }
+
+            return result;
+        }
     }
 }
