@@ -50,6 +50,10 @@ namespace BinarySearchTree
                         return;
                     }
                 }
+                else
+                {
+                    return;
+                }
             }
         }
 

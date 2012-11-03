@@ -77,6 +77,33 @@ namespace BinarySearchTree
         }
 
         [Test]
+        public void DuplicateAdd()
+        {
+            var t = new Tree<int>();
+
+            t.Add(22);
+            t.Add(20);
+            t.Add(25);
+            t.Add(24);
+            t.Add(33);
+            t.Add(10);
+            t.Add(7);
+            t.Add(8);
+            t.Add(23);
+            t.Add(20);
+
+            Assert.AreEqual(22, t.Root.Item);
+            Assert.AreEqual(20, t.Root.Left.Item);
+            Assert.AreEqual(10, t.Root.Left.Left.Item);
+            Assert.AreEqual(7, t.Root.Left.Left.Left.Item);
+            Assert.AreEqual(8, t.Root.Left.Left.Left.Right.Item);
+            Assert.AreEqual(25, t.Root.Right.Item);
+            Assert.AreEqual(24, t.Root.Right.Left.Item);
+            Assert.AreEqual(23, t.Root.Right.Left.Left.Item);
+            Assert.AreEqual(33, t.Root.Right.Right.Item);
+        }
+
+        [Test]
         public void FindInLeafNode()
         {
             var t = new Tree<int>();
