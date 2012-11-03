@@ -33,6 +33,7 @@ namespace BinarySearchTree
                     else
                     {
                         currentNode.Left = new Node<T>(item);
+                        currentNode.Left.Parent = currentNode;
                         return;
                     }
                 }
@@ -45,6 +46,7 @@ namespace BinarySearchTree
                     else
                     {
                         currentNode.Right = new Node<T>(item);
+                        currentNode.Right.Parent = currentNode;
                         return;
                     }
                 }
@@ -74,6 +76,56 @@ namespace BinarySearchTree
             }
 
             return result;
+        }
+
+        public void Delete(T item)
+        {
+            var node = Find(item);
+
+            if (node == null)
+            {
+                return;
+            }
+
+            //if (node.Right != null && node.Left != null)
+            //{
+            //    node.Item = node.Left.Item;
+
+            //    node.Left
+
+            //    return;
+            //}
+
+            if (node.Parent.Left == node)
+            {
+                if (node.Left == null && node.Right == null)
+                {
+                    node.Parent.Left = null;
+                }
+                else if (node.Left != null && node.Right == null)
+                {
+                    node.Parent.Left = node.Left;
+                }
+                else if (node.Right != null && node.Left == null)
+                {
+                    node.Parent.Left = node.Right;
+                }
+            }
+            else
+            {
+                if (node.Left == null && node.Right == null)
+                {
+                    node.Parent.Right= null;
+                }
+                else if (node.Left != null && node.Right == null)
+                {
+                    node.Parent.Right = node.Left;
+                }
+                else if (node.Right != null && node.Left == null)
+                {
+                    node.Parent.Right = node.Right;
+                }
+            }
         }
     }
 }

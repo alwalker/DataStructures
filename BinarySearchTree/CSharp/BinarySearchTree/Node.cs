@@ -8,15 +8,14 @@ namespace BinarySearchTree
 {
     public class Node<T> : IEquatable<Node<T>>
     {
-        private readonly T _item;
-
-        public T Item { get { return _item; } }
+        public T Item { get; set; }
         public Node<T> Left { get; set; }
         public Node<T> Right { get; set; }
+        public Node<T> Parent { get; set; }
 
         public Node(T item)
         {
-            _item = item;
+            Item = item;
         }
 
         public bool Equals(Node<T> other)
@@ -29,7 +28,7 @@ namespace BinarySearchTree
             return
                 object.ReferenceEquals(Right, other.Right) &&
                 object.ReferenceEquals(Left, other.Left) &&
-                _item.Equals(other.Item);
+                Item.Equals(other.Item);
         }
     }
 }
