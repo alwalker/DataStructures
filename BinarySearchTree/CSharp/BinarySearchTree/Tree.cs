@@ -84,51 +84,61 @@ namespace BinarySearchTree
 
         public void Delete(T item)
         {
-            var node = Find(item);
+            InnerDelete(_root, item);
+        }
 
+        private void InnerDelete(Node<T> node, T item)
+        {
             if (node == null)
             {
                 return;
             }
-
-            //if (node.Right != null && node.Left != null)
-            //{
-            //    node.Item = node.Left.Item;
-
-            //    node.Left
-
-            //    return;
-            //}
-
-            if (node.Parent.Left == node)
+            else if (item.CompareTo(node.Item) == 0)
             {
-                if (node.Left == null && node.Right == null)
+                if (node.Left != null && node.Right != null)
                 {
-                    node.Parent.Left = null;
+                    node.Item = node.Left.Item;
+                    InnerDelete(node.Left, node.Left.Item);
                 }
-                else if (node.Left != null && node.Right == null)
+
+                if (node.Parent.Left == node)
                 {
-                    node.Parent.Left = node.Left;
+                    if (node.Left == null && node.Right == null)
+                    {
+                        node.Parent.Left = null;
+                    }
+                    else if (node.Left != null && node.Right == null)
+                    {
+                        node.Parent.Left = node.Left;
+                    }
+                    else if (node.Right != null && node.Left == null)
+                    {
+                        node.Parent.Left = node.Right;
+                    }
                 }
-                else if (node.Right != null && node.Left == null)
+                else
                 {
-                    node.Parent.Left = node.Right;
+                    if (node.Left == null && node.Right == null)
+                    {
+                        node.Parent.Right = null;
+                    }
+                    else if (node.Left != null && node.Right == null)
+                    {
+                        node.Parent.Right = node.Left;
+                    }
+                    else if (node.Right != null && node.Left == null)
+                    {
+                        node.Parent.Right = node.Right;
+                    }
                 }
+            }
+            else if (item.CompareTo(node.Item) < 0)
+            {
+                InnerDelete(node.Left, item);
             }
             else
             {
-                if (node.Left == null && node.Right == null)
-                {
-                    node.Parent.Right= null;
-                }
-                else if (node.Left != null && node.Right == null)
-                {
-                    node.Parent.Right = node.Left;
-                }
-                else if (node.Right != null && node.Left == null)
-                {
-                    node.Parent.Right = node.Right;
-                }
+                InnerDelete(node.Right, item);
             }
         }
     }
