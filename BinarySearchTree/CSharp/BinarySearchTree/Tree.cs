@@ -141,5 +141,22 @@ namespace BinarySearchTree
                 InnerDelete(node.Right, item);
             }
         }
+
+        public void InOrderTraversal(Action<T> callback)
+        {
+            InnerInOrder(callback, _root);
+        }
+
+        private void InnerInOrder(Action<T> callback, Node<T> node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            InnerInOrder(callback, node.Left);
+            callback(node.Item);
+            InnerInOrder(callback, node.Right);
+        }
     }
 }

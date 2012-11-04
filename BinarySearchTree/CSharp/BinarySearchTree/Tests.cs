@@ -352,6 +352,36 @@ namespace BinarySearchTree
         }
 
         [Test]
+        public void InOrderTraversal()
+        {
+            var items = new List<int>();
+            var t = new Tree<int>();
+            t.Add(22);
+            t.Add(20);
+            t.Add(25);
+            t.Add(24);
+            t.Add(33);
+            t.Add(10);
+            t.Add(7);
+            t.Add(8);
+            t.Add(23);
+            t.Add(35);
+
+            t.InOrderTraversal(i => items.Add(i));
+
+            Assert.AreEqual(7, items[0]);
+            Assert.AreEqual(8, items[1]);
+            Assert.AreEqual(10, items[2]);
+            Assert.AreEqual(20, items[3]);
+            Assert.AreEqual(22, items[4]);
+            Assert.AreEqual(23, items[5]);
+            Assert.AreEqual(24, items[6]);
+            Assert.AreEqual(25, items[7]);
+            Assert.AreEqual(33, items[8]);
+            Assert.AreEqual(35, items[9]);
+        }
+
+        [Test]
         public void NodeEquality()
         {
             var left = new Node<int>(27);
