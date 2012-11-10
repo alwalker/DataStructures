@@ -16,8 +16,9 @@ let main argv =
     add None (Some root) 15
     add None (Some root) 14
     add None (Some root) 16
+    add None (Some root) 3
 
-    delete (Some root) 16
+    delete (Some root) 5
 
     printfn "%A" root
     Console.ReadLine() |> ignore

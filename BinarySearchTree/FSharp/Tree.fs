@@ -1,8 +1,16 @@
 ﻿module Tree
+open System
 
+[<CustomEquality; NoComparisonAttribute>]
 type Node<'a> = 
     { mutable Item: 'a; mutable Left: Node<'a> option; mutable Right: Node<'a> option; mutable Parent: Node<'a> option }
-
+    override x.Equals(other) =
+        obj.ReferenceEquals(x, other)
+    override x.GetHashCode() =
+        hash x
+    interface IEquatable<Node<'a>> with
+        member this.Equals(other) =
+            obj.ReferenceEquals(this, other)
 
 let rec add (parent: Node<'a> option) (node: Node<'a> option) (item: 'a) =
     match node with
@@ -34,14 +42,22 @@ let rec delete (node: Node<'a> option) (item: 'a) =
     | Some node when item = node.Item && node.Left.IsNone && node.Right.IsSome ->
         match node.Parent with
         | None -> printf "You tried to delete the right node of root" //figure out how to do this
-        | parent when parent.Value.Left = Some node -> node.Parent.Value.Left <- node.Right
-        | parent when parent.Value.Right = Some node -> node.Parent.Value.Right <- node.Right
+        | parent when parent.Value.Left = Some node -> 
+            node.Parent.Value.Left <- node.Right
+            node.Left.Value.Parent <- parent
+        | parent when parent.Value.Right = Some node -> 
+            node.Parent.Value.Right <- node.Right
+            node.Right.Value.Parent <- parent
         | _ -> ()
     | Some node when item = node.Item && node.Left.IsSome && node.Right.IsNone ->
         match node.Parent with
         | None -> printf "You tried to delete the left node of root" //figure out how to do this
-        | parent when parent.Value.Left = Some node -> node.Parent.Value.Left <- node.Left
-        | parent when parent.Value.Right = Some node -> node.Parent.Value.Right <- node.Left
+        | parent when parent.Value.Left = Some node -> 
+            node.Parent.Value.Left <- node.Left
+            node.Left.Value.Parent <- parent
+        | parent when parent.Value.Right = Some node ->
+            node.Parent.Value.Right <- node.Left
+            node.Right.Value.Parent <- parent
         | _ -> ()
     | _ -> ()
 
