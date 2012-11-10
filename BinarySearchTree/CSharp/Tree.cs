@@ -101,7 +101,22 @@ namespace BinarySearchTree
                     InnerDelete(node.Left, node.Left.Item);
                 }
 
-                if (node.Parent.Left == node)
+                if (node.Parent == null)
+                {
+                    if (node.Left == null && node.Right == null)
+                    {
+                        _root = null;
+                    }
+                    else if (node.Left != null && node.Right == null)
+                    {
+                        _root = node.Left;
+                    }
+                    else if (node.Right != null && node.Left == null)
+                    {
+                        _root = node.Right;
+                    }
+                }
+                else if (node.Parent.Left == node)
                 {
                     if (node.Left == null && node.Right == null)
                     {

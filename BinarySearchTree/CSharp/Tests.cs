@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace BinarySearchTree
@@ -158,6 +156,69 @@ namespace BinarySearchTree
             var actual = t.Find(101);
 
             Assert.IsNull(actual);
+        }
+
+        [Test]
+        public void DeleteRootWithNoChildrenShouldSetRootToNull()
+        {
+            var t = new Tree<int>();
+            t.Add(22);
+
+            t.Delete(22);
+
+            Assert.IsNull(t.Root);
+        }
+
+        [Test]
+        public void DeleteRootOnlyOneChildSetsChildAsRoot_Left()
+        {
+            var t = new Tree<int>();
+            t.Add(23);
+            t.Add(20);
+
+            t.Delete(23);
+
+            Assert.AreEqual(20, t.Root.Item);
+            Assert.IsNull(t.Root.Left);
+            Assert.IsNull(t.Root.Right);
+        }
+
+        [Test]
+        public void DeleteRootOnlyOneChildSetsChildAsRoot_Right()
+        {
+            var t = new Tree<int>();
+            t.Add(23);
+            t.Add(28);
+
+            t.Delete(23);
+
+            Assert.AreEqual(28, t.Root.Item);
+            Assert.IsNull(t.Root.Left);
+            Assert.IsNull(t.Root.Right);
+        }
+
+        [Test]
+        public void DeleteRootTwoChildren()
+        {
+            var t = new Tree<int>();
+            t.Add(23);
+            t.Add(20);
+            t.Add(25);
+            t.Add(24);
+            t.Add(33);
+            t.Add(10);
+            t.Add(7);
+            t.Add(8);
+
+            t.Delete(23);
+
+            Assert.AreEqual(20, t.Root.Item);
+            Assert.AreEqual(10, t.Root.Left.Item);
+            Assert.AreEqual(7, t.Root.Left.Left.Item);
+            Assert.AreEqual(8, t.Root.Left.Left.Right.Item);
+            Assert.AreEqual(25, t.Root.Right.Item);
+            Assert.AreEqual(24, t.Root.Right.Left.Item);
+            Assert.AreEqual(33, t.Root.Right.Right.Item);
         }
 
         [Test]
