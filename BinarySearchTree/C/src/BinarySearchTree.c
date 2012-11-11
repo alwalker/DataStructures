@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+void inner_traverse(node *, void(*)(void *));
+
 void add(tree *t, void *item, int size)
 {
 	if(t->root == NULL)
@@ -71,4 +73,21 @@ void add(tree *t, void *item, int size)
 			}
 		}
 	}
+}
+
+void traverse(tree *t, void(*callback)(void *))
+{
+	inner_traverse(t->root, callback);
+}
+
+void inner_traverse(node *n, void(*callback)(void *))
+{
+	if(n == NULL)
+	{
+		return;
+	}
+
+	inner_traverse(n->left, callback);
+	callback(n->item);
+	inner_traverse(n->right, callback);
 }

@@ -14,3 +14,4 @@ typedef struct tree
 }tree;
 
 void add(tree *, void *, int);
+void traverse(tree *, void(*)(void *));

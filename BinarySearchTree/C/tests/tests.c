@@ -8,7 +8,7 @@ void MyPrint(void *);
 int MyCompare(void *, void *);
 bool AddTests(char *);
 bool RemoveTests(char *);
-bool PrintTest(char *);
+bool TraverseTest(char *);
 bool GetTests(char *);
 bool IndexOfTests(char *);
 void TestPrintItem(void *);
@@ -31,17 +31,17 @@ int main()
 	}
 	fflush(NULL);
 
-	// passed = GetTests(result);
-	// if(passed)
-	// {
-	// 	printf("\nGet Tests Passed!");
-	// }
-	// else
-	// {
-	// 	printf("\nGet Tests Failed: %s\n", result);
-	// 	return 1;
-	// }
-	// fflush(NULL);
+	passed = TraverseTest(result);
+	if(passed)
+	{
+		printf("\nTraverse Test Passed!");
+	}
+	else
+	{
+		printf("\nTraverse Test Failed: %s\n", result);
+		return 1;
+	}
+	fflush(NULL);
 
 	// passed = IndexOfTests(result);
 	// if(passed)
@@ -335,33 +335,65 @@ bool AddTests(char *result)
 // 	return true;
 // }
 
-// char *testPrintout;
-// bool PrintTest(char *result)
-// {
-// 	testPrintout = (char *)calloc(2048, sizeof(char));
+char *testPrintout;
+bool TraverseTest(char *result)
+{
+	testPrintout = (char *)calloc(2048, sizeof(char));
 
-// 	linkedList *list = create((void *)"Item 1\0", sizeof("Item 1\0"), TestPrintItem, MyCompare);
-// 	add(list, (void *)"Item 2\0", sizeof("Item 2\0"));
-// 	add(list, (void *)"Item 3\0", sizeof("Item 3\0"));
-// 	add(list, (void *)"Item 4\0", sizeof("Item 4\0"));
-// 	add(list, (void *)"Item 5\0", sizeof("Item 5\0"));
+	int *i = (int *)calloc(1, sizeof(int));	
+	*i = 10;
 
-// 	printList(list);
+	tree *t = (tree *)calloc(1, sizeof(tree *));
+	t->root = NULL;
+	t->printItem = MyPrint;
+	t->compare = MyCompare;	
 
-// 	if(strcmp(testPrintout, "Item 5Item 4Item 3Item 2Item 1") != 0)
-// 	{
-// 		sprintf(result,
-// 			"Incorrect items passed to print:\n\t%s\nShould have been:\n\tItem 1Item 2Item 3Item 4Item 5",
-// 			testPrintout);
-// 		return false;
-// 	}
+	add(t, (void *)i, sizeof(int *));
 
-// 	return true;
-// }
-// void TestPrintItem(void *item)
-// {
-// 	strcat(testPrintout, (char *)item);
-// }
+	i = (int *)calloc(1, sizeof(int));
+	*i = 5;
+	add(t, (void *)i, sizeof(int *));
+
+	i = (int *)calloc(1, sizeof(int));
+	*i = 4;
+	add(t, (void *)i, sizeof(int *));
+
+	i = (int *)calloc(1, sizeof(int));
+	*i = 6;
+	add(t, (void *)i, sizeof(int *));
+
+	i = (int *)calloc(1, sizeof(int));
+	*i = 15;
+	add(t, (void *)i, sizeof(int *));
+
+	i = (int *)calloc(1, sizeof(int));
+	*i = 14;
+	add(t, (void *)i, sizeof(int *));
+
+	i = (int *)calloc(1, sizeof(int));
+	*i = 16;
+	add(t, (void *)i, sizeof(int *));
+
+
+	traverse(t, TestPrintItem);
+
+	if(strcmp(testPrintout, "4,5,6,10,14,15,16,") != 0)
+	{
+		sprintf(result,
+			"Incorrect items passed to print:\n\t%s\nShould have been:\n\t4,5,6,10,14,15,16,",
+			testPrintout);
+		return false;
+	}
+
+	return true;
+}
+void TestPrintItem(void *item)
+{
+	int *i = (int *)item;
+	char s[10];
+	sprintf(s, "%d,", *i);
+	strcat(testPrintout, s);
+}
 
 
 
