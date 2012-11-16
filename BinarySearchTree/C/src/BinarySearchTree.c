@@ -91,3 +91,25 @@ void inner_traverse(node *n, void(*callback)(void *))
 	callback(n->item);
 	inner_traverse(n->right, callback);
 }
+
+node *find(tree *t, void *item)
+{
+	node *curr = t->root;
+	while(curr != NULL)
+	{
+		if (t->compare(curr->item, item) > 0)
+		{
+			curr = curr->left;
+		}
+		else if (t->compare(curr->item, item) < 0)
+		{
+			curr = curr->right;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	return curr;
+}

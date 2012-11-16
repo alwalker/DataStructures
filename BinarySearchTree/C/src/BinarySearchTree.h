@@ -15,3 +15,4 @@ typedef struct tree
 
 void add(tree *, void *, int);
 void traverse(tree *, void(*)(void *));
+node *find(tree *, void *);

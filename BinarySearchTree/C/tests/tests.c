@@ -10,7 +10,7 @@ bool AddTests(char *);
 bool RemoveTests(char *);
 bool TraverseTest(char *);
 bool GetTests(char *);
-bool IndexOfTests(char *);
+bool FindTests(char *);
 void TestPrintItem(void *);
 
 int main()
@@ -43,17 +43,17 @@ int main()
 	}
 	fflush(NULL);
 
-	// passed = IndexOfTests(result);
-	// if(passed)
-	// {
-	// 	printf("\nIndexOf Tests Passed!");
-	// }
-	// else
-	// {
-	// 	printf("\nIndexOf Tests Failed: %s\n", result);
-	// 	return 1;
-	// }
-	// fflush(NULL);
+	passed = FindTests(result);
+	if(passed)
+	{
+		printf("\nFind Tests Passed!");
+	}
+	else
+	{
+		printf("\nFind Tests Failed: %s\n", result);
+		return 1;
+	}
+	fflush(NULL);
 
 	// memset(result, '\0', 1024);
 	// passed = RemoveTests(result);
@@ -172,32 +172,90 @@ bool AddTests(char *result)
 // 	return true;
 // }
 
-// bool IndexOfTests(char *result)
-// {
-// 	linkedList *list = create((void *)"Item 1\0", sizeof("Item 1\0"), MyPrint, MyCompare);
+bool FindTests(char *result)
+{
+	int *i = (int *)calloc(1, sizeof(int));	
+	*i = 10;
 
-// 	add(list, (void *)"Item 2\0", sizeof("Item 2\0"));
-// 	add(list, (void *)"Item 3\0", sizeof("Item 3\0"));
-// 	add(list, (void *)"Item 4\0", sizeof("Item 4\0"));
-// 	add(list, (void *)"Item 5\0", sizeof("Item 5\0"));
+	tree *t = (tree *)calloc(1, sizeof(tree *));
+	t->root = NULL;
+	t->printItem = MyPrint;
+	t->compare = MyCompare;	
 
-// 	int index = indexOf(list, (void *)"Item 1\0");
-// 	int badIndex = indexOf(list, (void *)"BANANAS\0");
+	add(t, (void *)i, sizeof(int *));
 
-// 	if(index != 4)
-// 	{			
-// 		sprintf(result, "Incorrect index returned: %d", index);
-// 		return false;
-// 	}
+	i = (int *)calloc(1, sizeof(int));
+	*i = 5;
+	add(t, (void *)i, sizeof(int *));
 
-// 	if(badIndex != -1)
-// 	{			
-// 		sprintf(result, "Found non existing item!", badIndex);
-// 		return false;
-// 	}
+	i = (int *)calloc(1, sizeof(int));
+	*i = 4;
+	add(t, (void *)i, sizeof(int *));
 
-// 	return true;
-// }
+	i = (int *)calloc(1, sizeof(int));
+	*i = 6;
+	add(t, (void *)i, sizeof(int *));
+
+	i = (int *)calloc(1, sizeof(int));
+	*i = 15;
+	add(t, (void *)i, sizeof(int *));
+
+	i = (int *)calloc(1, sizeof(int));
+	*i = 14;
+	add(t, (void *)i, sizeof(int *));
+
+	i = (int *)calloc(1, sizeof(int));
+	*i = 16;
+	add(t, (void *)i, sizeof(int *));
+
+
+	i = (int *)calloc(1, sizeof(int));
+	*i = 101;
+	node *shouldBeNull = find(t, (void *)i);
+
+	i = (int *)calloc(1, sizeof(int));
+	int *parent = (int *)calloc(1, sizeof(int));
+	int *left = (int *)calloc(1, sizeof(int));
+	int *right = (int *)calloc(1, sizeof(int));
+	*i = 15;
+	*parent = 10;
+	*left = 14;
+	*right = 16;
+	node *resultNode = find(t, (void *)i);
+
+	if(shouldBeNull != NULL)
+	{
+		sprintf(result,
+			"Found a non-existing item!");
+		return false;
+	}
+	if(resultNode == NULL)
+	{
+		sprintf(result,
+			"Found null!");
+		return false;		
+	}
+	if(t->compare(resultNode->parent->item, (void *)parent) != 0)
+	{
+		sprintf(result,
+			"Found: wrong parent %i", *(int *)resultNode->parent->item);
+		return false;
+	}
+	if(t->compare(resultNode->left->item, (void *)left) != 0)
+	{
+		sprintf(result,
+			"Found: wrong left %i", *(int *)resultNode->left->item);
+		return false;
+	}
+	if(t->compare(resultNode->right->item, (void *)right) != 0)
+	{
+		sprintf(result,
+			"Found: wrong right %i", *(int *)resultNode->right->item);
+		return false;
+	}
+
+	return true;
+}
 
 // bool RemoveTests(char *result)
 // {
